@@ -1,0 +1,14 @@
+Aim
+
+To write a C program that computes the ε-closure (epsilon closure) of every state in a Non-Deterministic Finite Automaton that has ε-moves.
+
+Recall: ε-closure(q) = the set of all states reachable from q using only ε-transitions (including q itself).
+
+Algorithm
+Represent the NFA's ε-moves as an adjacency matrix adj[i][j] (1 if there's an ε-move from state i to state j).
+For every state i (0 to n−1):
+Mark i itself as part of its closure.
+Do a DFS/BFS from i, following only ε-edges.
+Every state visited during this traversal belongs to ε-closure(i).
+Print the closure set for each state.
+Repeat for all n states.
