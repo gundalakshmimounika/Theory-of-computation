@@ -1,0 +1,66 @@
+/* ===============================================================
+   Program : DFA to accept strings over {a,b} that START WITH 'a'
+              AND END WITH 'a'
+   =============================================================== */
+
+#include <stdio.h>
+#include <string.h>
+
+/* State codes */
+#define Q0    0   /* initial state            */
+#define QA    1   /* started with a, last=a   -> ACCEPTING */
+#define QB    2   /* started with a, last=b   */
+#define QDEAD 3   /* does not start with a    */
+
+int main()
+{
+    char str[100];
+    char choice;
+
+    do {
+        int state = Q0;
+        int i;
+
+        printf("\nEnter a string (a/b only): ");
+        scanf("%s", str);
+
+        for (i = 0; i < strlen(str); i++) {
+            char ch = str[i];
+
+            switch (state) {
+                case Q0:
+                    if (ch == 'a') state = QA;
+                    else            state = QDEAD;
+                    break;
+
+                case QA:
+                    if (ch == 'a') state = QA;
+                    else            state = QB;
+                    break;
+
+                case QB:
+                    if (ch == 'a') state = QA;
+                    else            state = QB;
+                    break;
+
+                case QDEAD:
+                    state = QDEAD;
+                    break;
+
+                default:
+                    state = QDEAD;
+            }
+        }
+
+        if (state == QA)
+            printf("String \"%s\" is ACCEPTED by the DFA.\n", str);
+        else
+            printf("String \"%s\" is REJECTED by the DFA.\n", str);
+
+        printf("Check another string? (y/n): ");
+        scanf(" %c", &choice);
+
+    } while (choice == 'y' || choice == 'Y');
+
+    return 0;
+}
