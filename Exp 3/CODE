@@ -1,0 +1,55 @@
+/* ===============================================================
+   Program : Find the EPSILON-CLOSURE of every state of an NFA
+              with epsilon (e) moves
+   =============================================================== */
+
+#include <stdio.h>
+#define MAX 20
+
+int adj[MAX][MAX];   /* adj[i][j] = 1 if there is an epsilon move i -> j */
+int visited[MAX];
+int n;                /* number of states */
+
+/* DFS from 'state' marking every state reachable purely on epsilon moves */
+void dfs(int state, int closure[])
+{
+    visited[state] = 1;
+    closure[state] = 1;
+
+    for (int j = 0; j < n; j++) {
+        if (adj[state][j] && !visited[j])
+            dfs(j, closure);
+    }
+}
+
+int main()
+{
+    int edges, u, v;
+
+    printf("Enter number of states in the NFA: ");
+    scanf("%d", &n);
+
+    printf("Enter number of epsilon transitions: ");
+    scanf("%d", &edges);
+
+    printf("Enter each epsilon transition as: from to  (e.g. 0 1 means q0 -e-> q1)\n");
+    for (int i = 0; i < edges; i++) {
+        scanf("%d %d", &u, &v);
+        adj[u][v] = 1;
+    }
+
+    printf("\n-------- EPSILON CLOSURES --------\n");
+    for (int i = 0; i < n; i++) {
+        int closure[MAX] = {0};
+        for (int k = 0; k < n; k++) visited[k] = 0;
+
+        dfs(i, closure);   /* every state always includes itself */
+
+        printf("e-closure(q%d) = { ", i);
+        for (int k = 0; k < n; k++)
+            if (closure[k]) printf("q%d ", k);
+        printf("}\n");
+    }
+
+    return 0;
+}
