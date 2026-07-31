@@ -1,0 +1,32 @@
+Aim
+
+To write a C program to design and simulate a Deterministic Finite Automaton (DFA) that accepts strings over the alphabet {a, b} which start with 'a' and end with 'a'.
+
+DFA Design
+	Meaning
+States	Q0, QA, QB, QDEAD
+Alphabet (Σ)	{a, b}
+Start state	Q0
+Accepting state	QA
+Q0	Initial state — nothing read yet
+QA	String started with 'a' and the last symbol read so far is 'a' → accepting
+QB	String started with 'a' but the last symbol read so far is 'b'
+QDEAD	Trap state — string did not start with 'a'
+
+Transition Table
+
+State	on 'a'	on 'b'
+Q0	QA	QDEAD
+QA (final)	QA	QB
+QB	QA	QB
+QDEAD	QDEAD	QDEAD
+Algorithm
+Start at state Q0.
+Read the input string character by character.
+Apply the transition table for each symbol to move to the next state.
+If the first character is a, the automaton escapes Q0 into the "started-with-a" branch (QA/QB); if it's b, it falls into QDEAD permanently.
+Every time an a is read (while not in QDEAD), move/stay in QA; every b moves/stays in QB.
+After the entire string is consumed, check the final state:
+If final state = QA → ACCEPT (started and ended with a)
+Otherwise → REJECT
+Repeat for more strings if the user wants.
