@@ -1,0 +1,27 @@
+Aim
+
+To write a C program to design and simulate a Non-Deterministic Finite Automaton (NFA) that accepts strings over the alphabet {0, 1} which start with '0' and end with '1', using the subset (set-of-states) simulation method.
+
+NFA Design
+	
+States	q0, q1, q2
+Alphabet (Σ)	{0, 1}
+Start state	q0
+Accepting state	q2
+
+Transition Table (non-deterministic — note the multi-valued cell)
+
+State	on 0	on 1
+→q0	{q1}	{}
+q1	{q1}	{q1, q2}
+*q2	{}	{}
+
+The nondeterminism is at q1 on input 1: the NFA guesses whether that 1 is the final symbol (moves to q2, accepting) or just another symbol in the middle (stays in q1).
+
+Algorithm
+Start with the current state set = {q0}.
+Read the input one symbol at a time.
+For each symbol, compute the next state set = union of nfa[state][symbol] over every state currently in the set.
+Repeat until the string is fully consumed.
+If the final state set contains q2, ACCEPT; otherwise REJECT.
+(If the state set ever becomes empty, it stays empty — equivalent to a dead state.)
