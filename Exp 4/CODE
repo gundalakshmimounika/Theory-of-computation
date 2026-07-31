@@ -1,0 +1,60 @@
+/* ===============================================================
+   Program : Check whether a string belongs to the grammar
+                 S -> 0 A 1
+                 A -> 0 A | 1 A | epsilon
+   =============================================================== */
+
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[100];
+    char choice;
+
+    do {
+        int len, i, valid = 1;
+
+        printf("\nEnter a string (0/1 only): ");
+        scanf("%s", str);
+        len = strlen(str);
+
+        printf("\nDerivation trace:\n");
+        printf("S -> 0 A 1\n");
+
+        if (len < 2 || str[0] != '0') {
+            printf("First symbol must be '0' as required by S -> 0 A 1\n");
+            valid = 0;
+        } else {
+            for (i = 1; i < len - 1 && valid; i++) {
+                if (str[i] == '0')
+                    printf("A -> 0 A\n");
+                else if (str[i] == '1')
+                    printf("A -> 1 A\n");
+                else {
+                    printf("Symbol '%c' not in grammar's alphabet {0,1}\n", str[i]);
+                    valid = 0;
+                }
+            }
+
+            if (valid) {
+                printf("A -> epsilon\n");
+                if (str[len - 1] != '1') {
+                    printf("Last symbol must be '1' as required by S -> 0 A 1\n");
+                    valid = 0;
+                }
+            }
+        }
+
+        if (valid)
+            printf("\nString \"%s\" is ACCEPTED  -> belongs to the grammar.\n", str);
+        else
+            printf("\nString \"%s\" is REJECTED -> does NOT belong to the grammar.\n", str);
+
+        printf("\nCheck another string? (y/n): ");
+        scanf(" %c", &choice);
+
+    } while (choice == 'y' || choice == 'Y');
+
+    return 0;
+}
