@@ -1,0 +1,16 @@
+Aim
+
+To write a C program that checks whether a given string can be derived from the grammar:
+
+S -> 0 A 1
+A -> 0 A | 1 A | ε
+
+(This grammar generates the language 0(0|1)*1 — every valid string starts with 0, ends with 1, with anything in between.)
+
+Algorithm
+Read the input string.
+S -> 0 A 1 forces the first symbol to be 0; if not, reject immediately.
+Scan the middle portion of the string (between first and last character). Since A -> 0A | 1A, each 0 or 1 encountered here is a valid application of one of these productions — print it as a derivation step.
+Eventually A -> ε is applied, leaving only the trailing symbol.
+S -> 0 A 1 also forces the last symbol to be 1 — check this against what's left.
+If every step matched (first = 0, all middle symbols are 0/1, last = 1, length ≥ 2), the string is ACCEPTED; otherwise REJECTED.
