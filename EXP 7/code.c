@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[100];
+    int i, j, len, flag = 1;
+
+    printf("Enter a binary string: ");
+    scanf("%s", str);
+
+    len = strlen(str);
+
+    // Check whether the string contains only 0 and 1
+    for(i = 0; i < len; i++)
+    {
+        if(str[i] != '0' && str[i] != '1')
+        {
+            flag = 0;
+            break;
+        }
+    }
+
+    if(flag)
+    {
+        i = 0;
+        j = len - 1;
+
+        while(i < j)
+        {
+            if(str[i] == '0' && str[j] == '1')
+            {
+                i++;
+                j--;
+            }
+            else
+            {
+                flag = 0;
+                break;
+            }
+        }
+
+        // If one unmatched character remains, reject
+        if(i == j)
+            flag = 0;
+    }
+
+    if(flag)
+        printf("The string belongs to the grammar.\n");
+    else
+        printf("The string does not belong to the grammar.\n");
+
+    return 0;
+}
