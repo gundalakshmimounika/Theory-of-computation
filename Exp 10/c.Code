@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    char str[100];
+    int i, count = 0;
+
+    printf("Enter a string: ");
+    scanf("%s", str);
+
+    // Check for valid characters and count 'a'
+    for(i = 0; i < strlen(str); i++)
+    {
+        if(str[i] == 'a')
+        {
+            count++;
+        }
+        else if(str[i] != 'b')
+        {
+            printf("Invalid input! String should contain only 'a' and 'b'.\n");
+            return 0;
+        }
+    }
+
+    if(count % 2 == 0)
+        printf("Accepted\n");
+    else
+        printf("Rejected\n");
+
+    return 0;
+}
